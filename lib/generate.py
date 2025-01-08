@@ -1,7 +1,7 @@
 import sys
 import os
 import configparser
-import instaloader
+from TikTokApi import TikTokApi
 
 def generate_folders(preset):
     base_dir = 'value_presets'
@@ -19,18 +19,21 @@ def generate_folders(preset):
     print(f"Generated {num_folders} folders in '{base_dir}'")
     return num_folders
 
-def download_instagram_posts(tag, posts_per_folder, num_folders):
-    L = instaloader.Instaloader()
+def download_tiktok_posts(tag, posts_per_folder, num_folders):
+    api = TikTokApi()
 
     for i in range(1, num_folders + 1):
         folder_path = os.path.join('value_presets', str(i))
         # Download posts for the given tag
-        posts = instaloader.Hashtag.from_name(L.context, tag).get_posts()
+        tiktoks = api.hashtag(name=tag).videos(count=posts_per_folder)
         count = 0
-        for post in posts:
+        for tiktok in tiktoks:
             if count >= posts_per_folder:
                 break
-            L.download_post(post, target=folder_path)
+            video_data = tiktok.bytes()
+            video_filename = os.path.join(folder_path, f"{count + 1}.mp4")
+            with open(video_filename, 'wb') as video_file:
+                video_file.write(video_data)
             count += 1
 
 if __name__ == "__main__":
@@ -42,9 +45,9 @@ if __name__ == "__main__":
 
     # Load settings from settings.ini
     config = configparser.ConfigParser()
-    config.read('settings.ini')
+    config.read('../settings.ini')
     tag = config['Settings']['data_tag']
     value_per_preset = int(config['Settings']['value_per_preset'])
 
     num_folders = generate_folders(preset)
-    download_instagram_posts(tag, value_per_preset, num_folders)
+    download_tiktok_posts(tag, value_per_preset, num_folders)
