@@ -36,7 +36,7 @@ class PresetApp:
         selected_preset = self.preset_var.get()
         # Call generator.py with the selected presets
         subprocess.run(['python3', 'generate.py', selected_preset])
-        messagebox.showinfo("Generate", "Generated Content!")
+        messagebox.showinfo("Generate", "Done!")
         self.root.destroy()  # Close the application
 
 if __name__ == "__main__":
