@@ -10,7 +10,7 @@ class PresetApp:
 
         # Load settings from settings.ini
         self.config = configparser.ConfigParser()
-        self.config.read('settings.ini')
+        self.config.read('../settings.ini')
         self.presets = int(self.config['Settings']['presets'])
 
         # Create and place the dropdown menu
