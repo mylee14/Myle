@@ -15,7 +15,7 @@ def zip_directory(directory_path, zip_path):
 
 def email_zip(zip_path, recipient_email):
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('../config.ini')
     
     sender_email = config['EMAIL']['SENDER']
     sender_password = config['EMAIL']['PASSWORD']
