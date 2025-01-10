@@ -3,6 +3,7 @@ import shutil
 import zipfile
 import smtplib
 import configparser
+from datetime import datetime
 
 def zip_directory(directory_path, zip_path):
     with zipfile.ZipFile(zip_path, 'w') as zipf:
@@ -25,19 +26,26 @@ def email_zip(zip_path, recipient_email):
         server.starttls()
         server.login(sender_email, sender_password)
         with open(zip_path, 'rb') as f:
-            content = f.read()
-        server.sendmail(sender_email, recipient_email, content)
+            file_data = f.read()
+        message = f"""\
+Subject: Zipped Repo Data
+To: {recipient_email}
+From: {sender_email}
+
+Please find the attached zip file containing the repo data.
+"""
+        server.sendmail(sender_email, recipient_email, message, file_data)
 
 def main():
     base_path = 'repo_data'
-    zip_path = f"{base_path}-{time.strftime('%Y%m%d')}.zip"
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    zip_path = f"{base_path}-{current_date}.zip"
     recipient_email = input("Enter recipient email: ")
 
     zip_directory(base_path, zip_path)
     email_zip(zip_path, recipient_email)
 
     shutil.rmtree(base_path)
-    os.makedirs(base_path, exist_ok=True)
 
 if __name__ == "__main__":
     main()
