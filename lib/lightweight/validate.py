@@ -13,7 +13,7 @@ def zip_directory(directory_path, zip_path):
                            os.path.join(directory_path, '..')))
 
 def main():
-    base_path = 'repo_data'
+    base_path = 'repo_storage'
     current_date = datetime.now().strftime('%Y-%m-%d')
     zip_path = f"{base_path}-{current_date}.zip"
     

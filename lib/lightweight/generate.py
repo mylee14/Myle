@@ -37,7 +37,7 @@ def main():
     api_url = config['API']['URL']
     api_key = config['API']['KEY']
     num_presets = int(input("Enter number of presets (default is 4): ") or "4")
-    base_path = os.path.join('repo_data')
+    base_path = os.path.join('repo_storage')
 
     create_directories(base_path, num_presets)
     images = fetch_images(api_url, api_key, num_presets)
