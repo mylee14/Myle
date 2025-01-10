@@ -24,14 +24,14 @@ def save_images(base_path, images):
 def create_text_files(base_path, num_presets):
     for i in range(1, num_presets + 1):
         preset_dir = os.path.join(base_path, str(i))
-        with open(os.path.join(preset_dir, 'validate.txt'), 'w') as f:
-            f.write('predicted result:\n')
         with open(os.path.join(preset_dir, 'confirm.txt'), 'w') as f:
-            f.write('confirm result:\n')
+            f.write('Confirm result:\n')
+        with open(os.path.join(preset_dir, 'validate.txt'), 'w') as f:
+            f.write('Validate result:\n')
 
 def main():
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('../config.ini')
     
     api_url = config['API']['URL']
     api_key = config['API']['KEY']
