@@ -14,7 +14,8 @@ def fetch_images(api_url, api_key, num_presets):
 
 def save_images(base_path, images):
     for preset, image_list in images.items():
-        preset_dir = os.path.join(base_path, preset)
+        preset_number = preset.split('_')[1]  # Extract the preset number from the key
+        preset_dir = os.path.join(base_path, preset_number)
         for img_url in image_list:
             img_data = requests.get(img_url).content
             img_name = os.path.basename(img_url)
